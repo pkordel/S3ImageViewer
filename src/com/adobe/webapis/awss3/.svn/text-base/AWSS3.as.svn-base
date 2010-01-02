@@ -275,7 +275,7 @@ package com.adobe.webapis.awss3
 			s += timeValue;
 			var authString:String = getAuthenticationString("GET", String(s), "/" + escape(bucketName) + "/" + escape(objectName));
 			var url:String = (secure) ? "https" : "http";
-			url += "://" + AMAZON_ENDPOINT + "/" + escape(bucketName) + "/" + escape(objectName) + "?AWSAccessKeyId="+this.accessKey+"&Expires="+s+"&Signature="+authString;
+			url += "://" + AMAZON_ENDPOINT + "/" + escape(bucketName) + "/" + escape(objectName) + "?AWSAccessKeyId="+this.accessKey+"&Expires="+s+"&Signature="+encodeURIComponent(authString);
 			return url;
 		}
 
@@ -381,7 +381,7 @@ package com.adobe.webapis.awss3
 			toSign += dateString + "\n" + resource;
 			var toSignBytes:ByteArray = new ByteArray();
 			toSignBytes.writeUTFBytes(toSign);			
-			var hmacBytes:ByteArray = hmac.compute(secretAccessKeyBytes,toSignBytes);
+			var hmacBytes:ByteArray = hmac.compute(secretAccessKeyBytes, toSignBytes);
 			return Base64.encodeByteArray(hmacBytes);
 		}
 		
