@@ -1,0 +1,26 @@
+.controls {
+    background-color: #EEEEEE;
+}
+
+.navControls {
+    background-color: #CCCCCC;
+}
+        
+.scaleCombo {
+    background-color: #EEEEEE;
+    focus-alpha: 0;
+}
+
+.browseControls {
+    background-color: #EEEEEE;
+}
+
+ImageCanvas {
+    background-color: #FEFEFE;
+}
+
+Thumbnail {
+    background-color: #EEEEEE;
+    border-color: #DDDDDD;
+    border-weight: 2;
+}

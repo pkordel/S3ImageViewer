@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication 
+    xmlns:mx="http://www.adobe.com/2006/mxml" 
+    xmlns:ui="com.danorlando.view.components.containers.*"
+    layout="absolute"
+    backgroundColor="0x666666"
+    applicationComplete="onAppInit();"
+    closing="_uiController.onAppClosing();" minWidth="1100" minHeight="920">
+	
+	<mx:Style source="assets/main_stylesheet.css"/>
+	
+    <mx:Script>
+        <![CDATA[
+        	import com.danorlando.controller.UIController;
+        	import com.danorlando.view.components.containers.Authenticator;
+			import mx.core.Window;
+            
+/////////////////////////////////////////
+//
+//	internal vars
+//
+////////////////////////////////////////
+
+			private var _uiController:UIController = UIController.getInstance();
+
+//////////////////////////////////////
+//
+//  application init method
+//
+////////////////////////////////////   
+                            
+            private function onAppInit():void {
+            	_uiController.viewer = this;
+                var authWindow:Window = new Window();
+                authWindow.title = "Authenticate";
+                authWindow.systemChrome = NativeWindowSystemChrome.STANDARD;
+                authWindow.type = NativeWindowType.NORMAL;
+                authWindow.width = 400;
+                authWindow.height = 200;
+                var auth:Authenticator = new Authenticator();
+                authWindow.addChild(auth);
+                authWindow.open(true);
+                
+                addEventListener( NativeDragEvent.NATIVE_DRAG_ENTER,    this._uiController.onDragEnter );
+                addEventListener( NativeDragEvent.NATIVE_DRAG_DROP,     this._uiController.onDragDrop );
+                addEventListener( NativeDragEvent.NATIVE_DRAG_COMPLETE, this._uiController.onDragComplete );
+            }
+
+        ]]>
+    </mx:Script>
+
+    <mx:VBox width="100%" height="100%" paddingBottom="5">
+  
+        <mx:VBox width="100%" height="100%">
+
+            <mx:HBox width="100%" height="100%"
+                paddingLeft="5" paddingRight="5">
+        
+                <ui:ImageCanvas id="canvas"
+                    width="100%" height="100%" creationComplete="_uiController.canvas = this.canvas;"
+                    dragCopy="_uiController.onImageCanvasDragCopy( event );"
+                    />
+            </mx:HBox>
+
+            <ui:ImageBrowser id="browser"
+                width="100%" height="140" creationComplete="_uiController.browser = this.browser;"
+                select="_uiController.onThumbnailSelect( event );"
+                />
+
+         </mx:VBox>
+    </mx:VBox>
+
+</mx:WindowedApplication>

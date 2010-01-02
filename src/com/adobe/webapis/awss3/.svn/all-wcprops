@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/10/trunk/src/com/adobe/webapis/awss3
+END
+S3Object.as
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/10/trunk/src/com/adobe/webapis/awss3/S3Object.as
+END
+AWSS3.as
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/10/trunk/src/com/adobe/webapis/awss3/AWSS3.as
+END
+AWSS3Event.as
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/10/trunk/src/com/adobe/webapis/awss3/AWSS3Event.as
+END
+Bucket.as
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/10/trunk/src/com/adobe/webapis/awss3/Bucket.as
+END

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+	<mx:Script>
+		<![CDATA[
+			import com.danorlando.controller.UIController;
+			
+			private var _uiController:UIController = UIController.getInstance();
+			
+			public function authenticate():void {
+				_uiController.authenticate(accessid.text, secretkey.text, bucketname.text);
+				this.stage.nativeWindow.close();
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Form>
+		<mx:FormHeading label="Please Authenticate"/>
+		<mx:FormItem label="Access ID: ">
+			<mx:TextInput width="240" id="accessid"/>
+		</mx:FormItem>
+		<mx:FormItem label="Secret Access ID: ">
+			<mx:TextInput width="240" id="secretkey"/>
+		</mx:FormItem>
+		<mx:FormItem label="Bucket Name: ">
+			<mx:TextInput width="240" id="bucketname"/>
+		</mx:FormItem>
+		<mx:FormItem>
+			<mx:Button label="Submit" click="authenticate();"/>
+		</mx:FormItem>
+	</mx:Form>
+</mx:Canvas>

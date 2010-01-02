@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:ui="com.danorlando.view.*">
+
+    <mx:Metadata>
+         [Event( name="dragCopy", type="flash.events.Event" )]
+    </mx:Metadata>
+
+    <mx:Script>
+        <![CDATA[
+            import com.danorlando.model.ImageData;
+            import com.danorlando.controller.GalleryDataManager;
+            
+            [Bindable] private var _imageData:ImageData;
+            private static const SCALE_MINIMUM:Number = 0.25;
+            private static const SCALE_MAXIMUM:Number = 10;
+            private static const COMBO_WIDTH:int = 80;
+
+            private function onScaleChange( evt:Event ):void {
+                stage.focus = this;
+                var scale:Number = parseInt( sizeCombo.value.toString() ) / 100;
+                var value:Number = Math.min( SCALE_MAXIMUM,  Math.max( SCALE_MINIMUM, scale ) );
+                imageDisplay.scale = value;
+                // reset display text.
+                sizeCombo.text = ( value * 100 ).toString() + "%";
+            }
+
+            private function onPrevious( evt:MouseEvent ):void {
+                GalleryDataManager.getInstance().currentIndex -= 1;
+            }
+
+            private function onNext( evt:MouseEvent ):void {
+                GalleryDataManager.getInstance().currentIndex += 1;
+            }
+
+            private function onRotateLeft( evt:MouseEvent ):void {
+                imageDisplay.rotation -= 90;
+            }
+
+            private function onRotateRight( evt:MouseEvent ):void {
+                imageDisplay.rotation += 90;
+            }
+
+            public function set imageData( img:ImageData ):void {
+                _imageData = img;
+            }
+
+        ]]>
+    </mx:Script>
+
+    <mx:VBox width="100%" height="100%">
+
+        <mx:HBox width="100%" height="30"
+            paddingLeft="5" paddingRight="5" 
+            styleName="controls"
+            horizontalAlign="right" horizontalGap="5"
+            verticalAlign="middle"
+            enabled="{_imageData != null}">
+            <mx:Label id="imageName"
+                truncateToFit="true"
+                maxWidth="{width - COMBO_WIDTH - 15}"
+                text="{_imageData.name}"
+                />
+            <mx:Image id="rotateLeft" 
+                source="@Embed(source='/assets/rotateLeft.png')"
+                buttonMode="true" useHandCursor="true" 
+                click="onRotateLeft( event );"
+                />
+            <mx:Image id="rotateRight"    
+                source="@Embed(source='/assets/rotateRight.png')"
+                buttonMode="true" useHandCursor="true"
+                click="onRotateRight( event );" 
+                />
+
+         <mx:ComboBox id="sizeCombo"
+                width="{COMBO_WIDTH}" 
+                rowCount="6" 
+                styleName="scaleCombo"
+                textAlign="left" 
+                editable="true"
+                selectedIndex="2"
+                enter="onScaleChange( event );" 
+                close="onScaleChange( event );">
+                <mx:dataProvider>
+                    <mx:Object label="25%" />
+                    <mx:Object label="50%" />
+                    <mx:Object label="100%" />
+                    <mx:Object label="200%" />
+                    <mx:Object label="500%" />
+                    <mx:Object label="1000%" />
+                </mx:dataProvider>
+            </mx:ComboBox>
+
+        </mx:HBox>
+
+        <mx:HBox width="100%" height="100%"
+            paddingLeft="5" paddingBottom="5" paddingRight="5">
+            
+            <ui:ImageDisplay id="imageDisplay" width="100%" height="100%"
+                source="{_imageData.bitmapData}"
+                />
+        </mx:HBox>
+
+        <mx:HBox width="100%" height="30"
+            paddingLeft="5" paddingRight="5"
+            styleName="navControls"
+            horizontalAlign="center" horizontalGap="5"
+            verticalAlign="middle">
+
+            <mx:Box enabled="{GalleryDataManager.getInstance().currentIndex &gt; 0}"
+                styleName="navControls">
+                <mx:Image id="previousButon" 
+                    source="@Embed(source='/assets/previous_up.png')"
+                    buttonMode="true" useHandCursor="true" 
+                    click="onPrevious( event );"
+                    />
+            </mx:Box>
+            <mx:Box enabled="{GalleryDataManager.getInstance().currentIndex &lt; GalleryDataManager.getInstance().list.length - 1}"
+                styleName="navControls">
+                <mx:Image id="nextButton"    
+                    source="@Embed(source='/assets/next_up.png')"
+                    buttonMode="true" useHandCursor="true"
+                    click="onNext( event );" 
+                    />    
+            </mx:Box>
+
+        </mx:HBox>
+
+    </mx:VBox>    
+
+</mx:Canvas>
